@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A beginner-friendly visual guide to Git, GitHub and GitHub Pages.">
+<title>From Code to Cloud — Git, GitHub & GitHub Pages</title>
+<style>
+:root{--bg:#080d19;--panel:#111a2b;--panel2:#162238;--line:#263650;--text:#eaf1ff;--muted:#9aabc5;--cyan:#61e5d4;--blue:#7aa7ff;--purple:#c5a0ff;--orange:#ffbd75;--green:#83e6a3;--max:1080px}
+*{box-sizing:border-box;scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#14294a 0,transparent 36%),var(--bg);color:var(--text);font:16px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}.wrap{width:min(var(--max),calc(100% - 36px));margin:auto}
+header{position:sticky;top:0;z-index:10;background:#080d19df;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav{height:66px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:800;letter-spacing:.3px;color:var(--text)}.brand span{color:var(--cyan)}.navlinks{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.hero{padding:78px 0 48px}.eyebrow{color:var(--cyan);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:800}
+h1{font-size:clamp(38px,7vw,68px);line-height:1.05;letter-spacing:-2px;margin:16px 0}.gradient{background:linear-gradient(90deg,var(--cyan),var(--blue),var(--purple));background-clip:text;color:transparent}
+.lead{font-size:19px;color:#c1cee2;max-width:760px}.meta{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}.pill{border:1px solid var(--line);border-radius:99px;padding:5px 12px;color:var(--muted);font-size:12px}
+.hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:24px;align-items:center}.hero-art,.panel{background:linear-gradient(145deg,#14223a,#0e1728);border:1px solid var(--line);border-radius:20px;padding:22px}
+.stack{display:grid;gap:9px}.stack div{padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#0b1424;display:flex;justify-content:space-between}.stack b{color:var(--cyan)}.stack small{color:var(--muted)}
+.btn{display:inline-block;background:var(--cyan);color:#06121c;padding:11px 18px;border-radius:10px;font-weight:800;margin-top:10px}.btn:hover{text-decoration:none;filter:brightness(1.08)}
+.toc{margin:22px 0 42px;padding:22px;border:1px solid var(--line);border-radius:18px;background:#0d1728}.toc h2{font-size:18px;margin:0 0 12px}.toc ol{columns:2;margin:0;padding-left:22px;color:var(--muted)}.toc li{padding:3px 0}
+section{padding:42px 0;border-top:1px solid #1d2b40;scroll-margin-top:82px}.kicker{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}h2{font-size:clamp(27px,4vw,39px);line-height:1.2;margin:8px 0 12px;letter-spacing:-.8px}h3{font-size:19px;margin:18px 0 6px}p{color:#bdcbe0;margin:8px 0 14px}.muted{color:var(--muted)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px}.card h3{margin-top:0}.tag{display:inline-block;color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.analogy{border-left:3px solid var(--purple);background:#17172c;padding:14px 17px;border-radius:0 12px 12px 0;margin:18px 0}.analogy b{color:var(--purple)}
+.flow{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:22px 0}.node{background:#101e32;border:1px solid #38506f;border-radius:12px;padding:13px 17px;text-align:center;min-width:130px}.node strong{display:block;color:var(--cyan)}.arrow{color:var(--orange);font-size:22px}
+.code{background:#050a13;border:1px solid #27364e;border-radius:13px;overflow:hidden;margin:14px 0}.codehead{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;background:#111d30;color:var(--muted);font-size:12px}.copy{border:1px solid #425574;color:var(--text);background:#17263d;padding:5px 10px;border-radius:7px;cursor:pointer}.code pre{margin:0;padding:16px;overflow:auto;color:#c5e4ff;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}th,td{border:1px solid var(--line);padding:11px;text-align:left}th{background:#17253b;color:var(--cyan)}td{color:#c5d2e5}
+.steps{counter-reset:step;display:grid;gap:12px}.step{counter-increment:step;display:grid;grid-template-columns:42px 1fr;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px}.step:before{content:counter(step,decimal-leading-zero);color:var(--cyan);font-weight:900;font-size:18px}
+.callout{padding:16px;border:1px solid #365b56;background:#0d2427;border-radius:13px;color:#c8eee5;margin:18px 0}.warning{border-color:#725334;background:#271d12;color:#f7d7b0}
+.replay{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.replay button{background:#19334a;color:var(--text);border:1px solid #426080;border-radius:9px;padding:9px 14px;cursor:pointer}.progress{height:7px;background:#25344a;border-radius:9px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));transition:width .35s}
+footer{padding:35px 0 55px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}.small{font-size:13px}.highlight{color:var(--orange);font-weight:700}
+@media(max-width:700px){.hero-grid,.grid2{grid-template-columns:1fr}.navlinks{display:none}.toc ol{columns:1}.hero{padding-top:52px}.wrap{width:min(100% - 26px,var(--max))}}
+</style>
+</head>
+<body>
+<header><nav class="wrap"><a class="brand" href="#">CODE<span>→</span>CLOUD</a><div class="navlinks"><a href="#audience">Start here</a><a href="#git">Git</a><a href="#github">GitHub</a><a href="#pages">Pages</a><a href="#flow">The flow</a><a href="#lab">Code lab</a><a href="#cheatsheet">Cheat sheet</a></div></nav></header>
+<main class="wrap">
+<div class="hero">
+ <div class="hero-grid">
+  <div><div class="eyebrow">BCA learning field guide · 2026 edition</div>
+   <h1>From code<br>to <span class="gradient">cloud.</span></h1>
+   <h2 style="font-size:clamp(22px,3vw,30px);font-weight:600">How Git, GitHub & GitHub Pages work together</h2>
+   <p class="lead">A friendly, visual walkthrough of the tools that help developers track code, collaborate with others, and publish websites on the internet — one step at a time.</p>
+   <div class="meta"><span class="pill">10 min read</span><span class="pill">Beginner friendly</span><span class="pill">Practical code lab</span></div>
+   <a class="btn" href="#audience">Start reading ↓</a>
+  </div>
+  <div class="hero-art"><div class="tag">The journey</div><div class="stack" style="margin-top:12px">
+   <div><b>01 · Git</b><small>Track changes</small></div><div><b>02 · GitHub</b><small>Share & collaborate</small></div><div><b>03 · Pages</b><small>Publish the website</small></div>
+   </div><p class="small" style="margin-top:16px">Your local project becomes a website the world can visit.</p></div>
+ </div>
+</div>
+<div class="toc" id="contents"><h2>In this guide</h2><p class="small">Choose a section to jump directly to it.</p><ol>
+<li><a href="#audience">Who is this for?</a></li><li><a href="#git">01 · Git — version control</a></li><li><a href="#github">02 · GitHub — collaboration</a></li><li><a href="#pages">03 · GitHub Pages — publishing</a></li><li><a href="#flow">How all three connect</a></li><li><a href="#lab">Build it yourself (code lab)</a></li><li><a href="#troubleshoot">When things go wrong</a></li><li><a href="#cheatsheet">Quick cheat sheet</a></li></ol></div>
+
+<section id="audience"><div class="kicker">Before we begin</div><h2>Who is this guide for?</h2><p>If you have ever written an HTML page and wondered how to save its history, share it online, or turn it into a live website, you are in the right place.</p>
+<div class="grid2"><div class="card"><span class="tag">01 · Students</span><h3>BCA learners</h3><p>You want to submit practical work, build projects, and create a portfolio that shows what you can do.</p></div><div class="card"><span class="tag">02 · Beginners</span><h3>First-time developers</h3><p>You know a little HTML, CSS, or JavaScript, but Git commands and repositories still feel unfamiliar.</p></div></div>
+<div class="callout"><b>TL;DR — the one-sentence version</b><br>Git records the history of your project, GitHub stores and shares that Git project online, and GitHub Pages publishes a static website from your repository.</div></section>
+
+<section id="git"><div class="kicker">01 / Version control</div><h2>Git — the time machine for your code</h2><p>Git is a free, open-source distributed version control system. It records changes in files so you can see what changed, when it changed, and restore an earlier version when necessary.</p>
+<div class="analogy"><b>Plain-English analogy</b><br>Imagine writing an assignment. You save versions such as <em>assignment-final</em>, <em>assignment-final-2</em>, and <em>assignment-really-final</em>. Git does this in a much smarter, organized way. It keeps a history of meaningful snapshots called commits.</div>
+<div class="grid2"><div class="card"><h3>The problem it solves</h3><p>Without version control, it is easy to overwrite working code, lose earlier versions, or struggle to understand which change caused a bug.</p></div><div class="card"><h3>Where it works</h3><p>Git runs on your own computer. You can initialize a repository, save commits, create branches, and inspect history even when offline.</p></div></div>
+<h3>The basic Git journey</h3><div class="flow"><div class="node"><strong>Working folder</strong><small>Edit files</small></div><span class="arrow">→</span><div class="node"><strong>Staging area</strong><small>Choose changes</small></div><span class="arrow">→</span><div class="node"><strong>Repository</strong><small>Commit snapshot</small></div></div>
+<p class="small muted">Think of staging as preparing the exact changes you want included in your next saved snapshot.</p>
+<h3>Important Git commands</h3>
+<div class="code"><div class="codehead"><span>Terminal · Start a repository</span><button class="copy">Copy</button></div><pre>git init
+git status
+git add .
+git commit -m "First project version"
+git log</pre></div>
+<p><b>What each command does:</b> <code>git init</code> starts tracking a folder; <code>git status</code> shows what changed; <code>git add .</code> stages changes; <code>git commit</code> saves a snapshot; and <code>git log</code> displays commit history.</p>
+<h3>Branches: work safely in parallel</h3><p>A branch is a separate line of development. You can build a new feature without changing the main version until you are ready to merge it.</p>
+<div class="flow"><div class="node"><strong>main</strong><small>Stable project</small></div><span class="arrow">↗</span><div class="node"><strong>feature</strong><small>New work</small></div><span class="arrow">↘</span><div class="node"><strong>merge</strong><small>Combine changes</small></div></div>
+<div class="code"><div class="codehead"><span>Terminal · Branch commands</span><button class="copy">Copy</button></div><pre>git branch feature-home
+git switch feature-home
+# Make your changes, then:
+git add .
+git commit -m "Add homepage feature"
+git switch main
+git merge feature-home</pre></div>
+<div class="callout"><b>Key takeaway:</b> Git is your project's change-history manager. It helps you experiment without losing the work that already functions.</div></section>
+
+<section id="github"><div class="kicker">02 / Online collaboration</div><h2>GitHub — your project's home on the internet</h2><p>GitHub is an online platform for hosting Git repositories. It adds collaboration tools around Git, allowing developers to share code, review proposed changes, report bugs, and work together.</p>
+<div class="analogy"><b>Plain-English analogy</b><br>If Git is the notebook where you record every version of your project, GitHub is the shared online bookshelf where you keep that notebook so teammates can access it.</div>
+<div class="grid2"><div class="card"><h3>Repository</h3><p>An online project space containing files, folders, commits, and branches.</p></div><div class="card"><h3>Pull request</h3><p>A way to propose changes and ask others to review them before merging.</p></div><div class="card"><h3>Issues</h3><p>A place to report bugs, ask questions, and track work that needs doing.</p></div><div class="card"><h3>Fork</h3><p>Your own copy of another person's repository, which you can experiment with independently.</p></div></div>
+<h3>How your local Git project reaches GitHub</h3><div class="flow"><div class="node"><strong>Your computer</strong><small>Local repository</small></div><span class="arrow">⇄</span><div class="node"><strong>GitHub</strong><small>Remote repository</small></div></div>
+<div class="code"><div class="codehead"><span>Terminal · Connect and upload</span><button class="copy">Copy</button></div><pre># Add your GitHub repository as a remote
+git remote add origin https://github.com/USERNAME/REPOSITORY.git
+
+# Set the main branch name
+git branch -M main
+
+# Upload your commits
+git push -u origin main</pre></div>
+<p>Replace <code>USERNAME</code> and <code>REPOSITORY</code> with your own GitHub username and repository name. GitHub may ask you to authenticate before allowing the upload.</p>
+<h3>Useful GitHub features</h3><table><tr><th>Feature</th><th>What it is used for</th></tr><tr><td>README.md</td><td>Explains the project, setup, and usage.</td></tr><tr><td>Pull requests</td><td>Reviews and merges proposed changes.</td></tr><tr><td>Issues</td><td>Tracks bugs, ideas, and tasks.</td></tr><tr><td>Actions</td><td>Automates workflows such as testing and deployment.</td></tr></table>
+<div class="callout"><b>Key takeaway:</b> GitHub makes Git projects easier to share, review, and build together. Git and GitHub are related, but they are not the same thing.</div></section>
+
+<section id="pages"><div class="kicker">03 / Website publishing</div><h2>GitHub Pages — take your website live</h2><p>GitHub Pages is a static-site hosting service that publishes website files from a GitHub repository. It is useful for portfolios, project pages, documentation, and simple blogs.</p>
+<div class="analogy"><b>Plain-English analogy</b><br>Think of your GitHub repository as the folder containing your website files. GitHub Pages is the display window that makes those files available as a website through a public web address.</div>
+<div class="grid2"><div class="card"><h3>What it supports</h3><p>HTML for page structure, CSS for design, and JavaScript for browser-side interaction.</p></div><div class="card"><h3>What it is not</h3><p>It is not a general-purpose server for running a traditional backend such as PHP, Python, or a database.</p></div></div>
+<h3>Publish your first website</h3><div class="steps">
+<div class="step"><div><b>Create a repository</b><p>Create a new repository on GitHub. For a simple project, make it public if you are using GitHub Free.</p></div></div>
+<div class="step"><div><b>Add your website files</b><p>Place an <code>index.html</code> file at the top level of the publishing folder. Add CSS and JavaScript files if needed.</p></div></div>
+<div class="step"><div><b>Open repository Settings</b><p>Go to your repository, select <b>Settings</b>, then choose <b>Pages</b> from the sidebar.</p></div></div>
+<div class="step"><div><b>Choose the publishing source</b><p>Under Build and deployment, choose <b>Deploy from a branch</b>, select <code>main</code> and <code>/(root)</code>, then click Save.</p></div></div>
+<div class="step"><div><b>Wait for deployment</b><p>GitHub builds and publishes the site. Check the Pages area or Actions tab for deployment status.</p></div></div>
+<div class="step"><div><b>Open your live website</b><p>Your project site normally uses this address pattern: <code>https://USERNAME.github.io/REPOSITORY/</code>.</p></div></div>
+</div>
+<div class="code"><div class="codehead"><span>index.html · A tiny first website</span><button class="copy">Copy</button></div><pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;My First Website&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Hello, GitHub Pages!&lt;/h1&gt;
+  &lt;p&gt;My first website is now online.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre></div>
+<div class="callout warning"><b>Remember:</b> GitHub Pages sites are publicly available on the internet. Never publish passwords, API keys, private information, or confidential files in your website repository.</div>
+<div class="callout"><b>Key takeaway:</b> GitHub Pages turns a repository of static website files into a live website that people can visit.</div></section>
+
+<section id="flow"><div class="kicker">The big picture</div><h2>How Git, GitHub & Pages connect</h2><p>Follow the journey of a student creating a simple portfolio website. Each tool has one job, and together they create a smooth development workflow.</p>
+<div class="panel"><div class="replay"><b>Interactive project journey</b><button id="replay">Replay the flow ↻</button><span class="muted small" id="flowlabel">Ready to begin</span></div><div class="progress"><span id="bar"></span></div><div class="flow" id="flowNodes"><div class="node"><strong>1 · Write code</strong><small>HTML / CSS</small></div><span class="arrow">→</span><div class="node"><strong>2 · Git commit</strong><small>Save a snapshot</small></div><span class="arrow">→</span><div class="node"><strong>3 · GitHub push</strong><small>Upload online</small></div><span class="arrow">→</span><div class="node"><strong>4 · Pages deploy</strong><small>Publish website</small></div><span class="arrow">→</span><div class="node"><strong>5 · Visitors</strong><small>Open the URL</small></div></div><p class="small muted">Press replay to walk through the stages one by one.</p></div>
+<h3>One project, three tools</h3><table><tr><th>Stage</th><th>Tool</th><th>What happens</th><th>Think of it as</th></tr><tr><td>1</td><td>Git</td><td>Tracks and saves project changes.</td><td>Time machine</td></tr><tr><td>2</td><td>GitHub</td><td>Stores the repository online.</td><td>Shared bookshelf</td></tr><tr><td>3</td><td>GitHub Pages</td><td>Publishes static website files.</td><td>Display window</td></tr></table>
+<div class="callout"><b>The complete idea:</b> You create files → Git records your changes → GitHub stores the repository → GitHub Pages publishes the website → visitors open your site.</div></section>
+
+<section id="lab"><div class="kicker">Hands on</div><h2>Build it yourself: a mini publishing lab</h2><p>Let's create a tiny project and send it from your computer to GitHub. These commands assume Git is installed and you have created an empty GitHub repository.</p>
+<h3>1 · Create a project folder</h3><div class="code"><div class="codehead"><span>Windows PowerShell</span><button class="copy">Copy</button></div><pre>mkdir my-first-blog
+cd my-first-blog</pre></div>
+<h3>2 · Create an index.html file</h3><p>Open this folder in VS Code and create <code>index.html</code>. Paste the small HTML example from the GitHub Pages section and save it.</p>
+<h3>3 · Start Git and save your first version</h3><div class="code"><div class="codehead"><span>Terminal</span><button class="copy">Copy</button></div><pre>git init
+git add .
+git commit -m "Create my first blog"</pre></div>
+<h3>4 · Connect to your GitHub repository</h3><div class="code"><div class="codehead"><span>Terminal · Replace the URL</span><button class="copy">Copy</button></div><pre>git branch -M main
+git remote add origin https://github.com/USERNAME/REPOSITORY.git
+git push -u origin main</pre></div>
+<h3>5 · Publish with GitHub Pages</h3><p>Open your repository on GitHub → Settings → Pages → Deploy from a branch → select <code>main</code> and <code>/(root)</code> → Save.</p>
+<h3>6 · Update your website later</h3><div class="code"><div class="codehead"><span>Terminal · Save and publish another change</span><button class="copy">Copy</button></div><pre>git add .
+git commit -m "Update blog content"
+git push</pre></div>
+<p>After the deployment finishes, refresh your website to see the latest version. You can check the Actions tab or Pages settings if you want to follow the deployment.</p>
+<div class="callout"><b>Pro tip:</b> Make small commits with clear messages, such as <code>Add homepage</code> or <code>Fix navigation menu</code>. It makes your project history easier to understand.</div></section>
+
+<section id="troubleshoot"><div class="kicker">Going deeper</div><h2>When things go wrong</h2><p>A calm checklist is better than panic. Here are common beginner problems and what to check first.</p>
+<div class="grid2"><div class="card"><h3>Git command not recognized</h3><p>Git may not be installed, or Windows may not have refreshed its PATH. Install Git for Windows, reopen the terminal, and run <code>git --version</code>.</p></div><div class="card"><h3>Push is rejected</h3><p>The remote repository may contain commits you do not have locally. Run <code>git pull</code> and resolve any conflicts before pushing again.</p></div><div class="card"><h3>GitHub Pages shows 404</h3><p>Check that <code>index.html</code> is spelled exactly like that and is at the top level of the selected publishing folder.</p></div><div class="card"><h3>Website looks outdated</h3><p>Check the latest deployment in Actions, confirm your changes were pushed to the publishing branch, and refresh the browser.</p></div></div>
+<div class="callout warning"><b>Important distinction:</b> GitHub Pages is designed for static websites. If your project needs server-side processing or a database, you will need an appropriate backend hosting service as well.</div></section>
+
+<section id="cheatsheet"><div class="kicker">Quick reference</div><h2>Cheat sheet: the whole workflow</h2><p>Keep this table next to your terminal while practising.</p>
+<table><tr><th>Command</th><th>Purpose</th><th>Remember it as</th></tr><tr><td><code>git init</code></td><td>Initialize a repository.</td><td>Start tracking</td></tr><tr><td><code>git status</code></td><td>Check changed files.</td><td>Project check-up</td></tr><tr><td><code>git add .</code></td><td>Stage all changes.</td><td>Prepare snapshot</td></tr><tr><td><code>git commit -m "..."</code></td><td>Save a snapshot.</td><td>Record progress</td></tr><tr><td><code>git push</code></td><td>Upload commits.</td><td>Send to GitHub</td></tr><tr><td><code>git pull</code></td><td>Fetch and integrate remote changes.</td><td>Bring updates down</td></tr><tr><td><code>git clone URL</code></td><td>Copy a remote repository.</td><td>Get a project</td></tr><tr><td><code>git log</code></td><td>View commit history.</td><td>Look back</td></tr></table>
+<h3>Three questions to test yourself</h3><ol><li>Which tool records changes in your project files?</li><li>Which platform hosts Git repositories online?</li><li>Which service can publish a static website from a repository?</li></ol>
+<p><b>Answers:</b> 1. Git · 2. GitHub · 3. GitHub Pages.</p>
+<div class="callout"><b>You now have the map.</b><br>Git helps you manage change. GitHub helps you collaborate. GitHub Pages helps you publish. Start with a small HTML page, practise the workflow, and build your portfolio one commit at a time.</div>
+</section>
+</main>
+<footer><div class="wrap"><b>CODE → CLOUD</b><p>Made for curious BCA learners who want to understand not only which commands to type, but why they matter.</p><p><b>Official learning resources</b><br><a href="https://git-scm.com/doc" target="_blank" rel="noopener">Git documentation</a> · <a href="https://docs.github.com/" target="_blank" rel="noopener">GitHub Docs</a> · <a href="https://docs.github.com/en/pages" target="_blank" rel="noopener">GitHub Pages Docs</a></p><p class="small">Educational guide · Beginner friendly · English</p></div></footer>
+<script>
+document.querySelectorAll('.copy').forEach(btn=>btn.addEventListener('click',async()=>{const text=btn.parentElement.nextElementSibling.innerText;try{await navigator.clipboard.writeText(text);btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1400)}catch(e){btn.textContent='Select code';}}));
+const labels=['Write your HTML, CSS and JavaScript files.','Git stages and commits a snapshot of your changes.','Git pushes your commits to the remote GitHub repository.','GitHub Pages builds and publishes your static site.','Visitors open the published website URL.'];
+document.getElementById('replay').addEventListener('click',()=>{let i=0;const bar=document.getElementById('bar'),label=document.getElementById('flowlabel');bar.style.width='0%';label.textContent='Starting…';const tick=()=>{if(i>=labels.length){label.textContent='Journey complete — your site is live!';return;}label.textContent=(i+1)+'. '+labels[i];bar.style.width=((i+1)/labels.length*100)+'%';i++;setTimeout(tick,1050)};tick();});
+</script>
+</body>
+</html>
